@@ -1,0 +1,38 @@
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        # automatically injects dependencies in your services
+        autowire: true
+        # automatically registers your services as commands, event subscribers, etc.
+        autoconfigure: true
+        # this means you cannot fetch services directly from the container via $container->get()
+        # if you need to do this, you can override this setting on individual services
+        public: false
+    Pimcore\Bundle\AdminBundle\EventListener\CsrfProtectionListener:
+        class: AppBundle\EventListener\DisableCsrfProtectionListener
+        public: true
+        arguments: ['%pimcore_admin.csrf_protection.excluded_routes%', '@templating.engine.php']
+        calls:
+            - [setLogger, ['@logger']]
+        tags:
+            - { name: monolog.logger, channel: admin }
+    #
+    # CONTROLLERS
+    #
+
+    # auto-register all controllers as services
+    AppBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+
+    #
+    # COMMANDS
+    #
+
+    # auto-register all commands as services
+    AppBundle\Command\:
+        resource: '../../Command/*'
+        tags: ['console.command']
+        

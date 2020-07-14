@@ -1,0 +1,12 @@
+{
+    "name": "yw/pimcore-deployer",
+    "require": {
+        "youwe/deployer-pimcore": "1.5.7"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://youwe:open@packages.youwe.nl/"
+        }
+    ]
+}

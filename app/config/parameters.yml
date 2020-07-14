@@ -1,0 +1,11 @@
+parameters:
+    secret: unique-secret-key
+
+    image_mapper.getters:
+        - Product: getBySku
+        - Other: getByNana
+
+    image_mapper.set_types:
+        - Images: asset
+        - Image: asset
+        - Doc: asset

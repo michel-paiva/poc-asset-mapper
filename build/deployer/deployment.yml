@@ -1,0 +1,24 @@
+pimcore:
+    general:
+        domain: ##webserver_domain##
+    cache:
+        pools:
+            redis:
+                enabled: true
+                connection:
+                    server: ##redis_hostname##
+                    port: ##redis_port##
+                    database: ##redis_database##
+
+doctrine:
+    dbal:
+        connections:
+            default:
+                driver: pdo_mysql
+                host: ##mysql_hostname##
+                port: ##mysql_port##
+                dbname: ##mysql_database##
+                user: ##mysql_user##
+                password: ##mysql_password##
+                charset: UTF8MB4
+                server_version: 5.7

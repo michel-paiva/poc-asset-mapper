@@ -1,0 +1,30 @@
+version: '3.4'
+services:
+    pimcore:
+        image: yw/capertrigth:latest-dev
+        build:
+            context: .
+            target: development
+        ports:
+            - "8500:80"
+        volumes:
+            - .:/var/www/html
+        environment:
+            PIMCORE_INSTALL_MYSQL_HOST_SOCKET: mysql
+            PIMCORE_INSTALL_MYSQL_USERNAME: root
+            PIMCORE_INSTALL_MYSQL_PASSWORD: root
+        links:
+            - mysql:mysql
+    mysql:
+        image: mysql:5.7.29
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:5.0.1
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: root
+        links:
+            - mysql:db
+        ports:
+            - 8501:80

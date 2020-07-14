@@ -1,0 +1,30 @@
+#!/usr/bin/env php
+<?php
+
+$sourceJson = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'composer.json']);
+$sourceLock = implode(DIRECTORY_SEPARATOR, [__DIR__, '..', 'composer.lock']);
+
+$targetJson = implode(DIRECTORY_SEPARATOR, [__DIR__, 'composer.for-cache-purpose.json']);
+$targetLock = implode(DIRECTORY_SEPARATOR, [__DIR__, 'composer.for-cache-purpose.lock']);
+
+$operations = [
+    $sourceJson => $targetJson,
+    $sourceLock => $targetLock,
+];
+
+foreach ($operations as $source => $target) {
+    echo "Updating file '$target'... ";
+    if (unlink($target)) {
+        if (copy($source, $target)) {
+            echo "SUCCESS!\n";
+        } else {
+            echo "FAIL!\n";
+            echo sprintf("\nFailed to copy file '%s' to '%s'", $source, $target);
+            die(1);
+        }
+    } else {
+        echo "FAIL!\n";
+        echo sprintf("\nFailed to delete outdated file '%s'", $target);
+        die(1);
+    }
+}
